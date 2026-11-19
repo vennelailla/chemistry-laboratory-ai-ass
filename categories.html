@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Categories — ChemLab Assistant{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block main_class %}content-page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="glass-card page-card">
+        <h1 class="section-title"><i class="fas fa-layer-group me-2 text-purple"></i>Knowledge Categories</h1>
+        <p class="section-subtitle">Browse topics covered in the chemistry knowledge base</p>
+
+        <div class="d-flex flex-wrap gap-1 mb-4">
+            {% for category in categories %}
+            <a href="{{ url_for('search', q=category) }}" class="category-badge">
+                <i class="fas fa-tag me-1"></i>{{ category }}
+            </a>
+            {% endfor %}
+        </div>
+
+        {% if not categories %}
+        <p class="text-muted text-center py-4">No categories found in the knowledge base.</p>
+        {% endif %}
+
+        <div class="text-center mt-3">
+            <a href="{{ url_for('chat') }}" class="btn btn-primary-gradient">
+                <i class="fas fa-comments me-2"></i>Ask the AI Assistant
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

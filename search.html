@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Search — ChemLab Assistant{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block main_class %}content-page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="glass-card page-card">
+        <h1 class="section-title"><i class="fas fa-search me-2 text-purple"></i>Search Knowledge Base</h1>
+        <p class="section-subtitle">Find chemistry questions and answers from the curated database</p>
+
+        <form method="GET" action="{{ url_for('search') }}" class="mb-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" name="q" value="{{ keyword }}"
+                       placeholder="Search for elements, safety, reactions..." autofocus>
+                <button type="submit" class="btn btn-primary-gradient px-4">Search</button>
+            </div>
+        </form>
+
+        {% if keyword %}
+        <p class="text-muted mb-3" style="font-size: 0.9rem;">
+            Found <strong>{{ results|length }}</strong> result(s) for "<strong>{{ keyword }}</strong>"
+        </p>
+        {% endif %}
+
+        {% for result in results %}
+        <div class="glass-card search-result">
+            <span class="category-badge mb-2">{{ result.Category }}</span>
+            <h6 class="fw-semibold mt-2 mb-1">{{ result.Question }}</h6>
+            <p class="text-muted mb-2" style="font-size: 0.9rem;">{{ result.Answer[:300] }}{% if result.Answer|length > 300 %}...{% endif %}</p>
+            <a href="{{ url_for('chat') }}?q={{ result.Question | urlencode }}" class="topic-link">
+                Ask AI about this <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+        {% endfor %}
+
+        {% if keyword and not results %}
+        <div class="text-center py-4">
+            <i class="fas fa-flask fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No results found. Try a different keyword or ask the AI assistant.</p>
+            <a href="{{ url_for('chat') }}?q={{ keyword | urlencode }}" class="btn btn-outline-lab">
+                <i class="fas fa-robot me-2"></i>Ask AI Instead
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

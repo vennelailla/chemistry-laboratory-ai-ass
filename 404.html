@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}404 — Page Not Found{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block main_class %}error-page{% endblock %}
+
+{% block content %}
+<div class="glass-card page-card" style="max-width: 480px;">
+    <div class="error-code">404</div>
+    <h2 class="section-title mb-2">Page Not Found</h2>
+    <p class="text-muted mb-4">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="{{ url_for('home') if session.get('username') else url_for('login') }}" class="btn btn-primary-gradient">
+        <i class="fas fa-home me-2"></i>Go Home
+    </a>
+</div>
+{% endblock %}

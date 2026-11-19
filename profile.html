@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Profile — ChemLab Assistant{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block main_class %}content-page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass-card page-card">
+                <div class="text-center mb-4">
+                    <div class="sidebar-user-avatar mx-auto mb-3" style="width: 72px; height: 72px; font-size: 1.75rem; border-radius: 18px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h1 class="section-title mb-1">{{ username }}</h1>
+                    <p class="text-muted mb-0"><i class="fas fa-envelope me-1"></i>{{ email }}</p>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-4">
+                        <div class="glass-card profile-stat">
+                            <div class="value">{{ total_questions }}</div>
+                            <div class="label">KB Entries</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="glass-card profile-stat">
+                            <div class="value">{{ total_categories }}</div>
+                            <div class="label">Categories</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="glass-card profile-stat">
+                            <div class="value">{{ chat_count }}</div>
+                            <div class="label">Chat Messages</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <small class="text-muted">Knowledge Base Coverage</small>
+                        <small class="text-muted">{{ kb_percent }}%</small>
+                    </div>
+                    <div class="progress-lab"><div class="bar" style="width: {{ kb_percent }}%"></div></div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-1">
+                        <small class="text-muted">Session Activity</small>
+                        <small class="text-muted">{{ chat_percent }}%</small>
+                    </div>
+                    <div class="progress-lab"><div class="bar" style="width: {{ chat_percent }}%"></div></div>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-center flex-wrap">
+                    <a href="{{ url_for('chat') }}" class="btn btn-primary-gradient">
+                        <i class="fas fa-comments me-2"></i>Continue Chatting
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-lab">
+                        <i class="fas fa-right-from-bracket me-2"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

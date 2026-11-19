@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}About — ChemLab Assistant{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block main_class %}content-page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass-card page-card">
+                <div class="text-center mb-4">
+                    <div class="auth-logo mx-auto">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h1 class="section-title">About ChemLab Assistant</h1>
+                    <p class="section-subtitle mb-0">AI-powered chemistry education for everyone</p>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-semibold text-primary mb-2"><i class="fas fa-bullseye me-2"></i>Mission</h5>
+                    <p class="text-muted">
+                        The Chemistry Laboratory Safety & Compound Assistant is an AI-powered RAG chatbot
+                        designed to help students, teachers, laboratory technicians, and chemistry enthusiasts
+                        learn about laboratory safety, chemical compounds, elements, acids, bases, salts,
+                        reactions, laboratory equipment, and basic analytical chemistry.
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-semibold text-primary mb-2"><i class="fas fa-cogs me-2"></i>How It Works</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="glass-card p-3 text-center h-100">
+                                <i class="fas fa-database fa-2x text-purple mb-2"></i>
+                                <h6 class="fw-semibold">Knowledge Base</h6>
+                                <small class="text-muted">Curated chemistry Q&A from verified educational sources</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="glass-card p-3 text-center h-100">
+                                <i class="fas fa-magnifying-glass-chart fa-2x text-purple mb-2"></i>
+                                <h6 class="fw-semibold">RAG Retrieval</h6>
+                                <small class="text-muted">Semantic search finds the most relevant context for your question</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="glass-card p-3 text-center h-100">
+                                <i class="fas fa-robot fa-2x text-purple mb-2"></i>
+                                <h6 class="fw-semibold">AI Generation</h6>
+                                <small class="text-muted">LLM generates accurate, educational responses grounded in retrieved knowledge</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-semibold text-primary mb-2"><i class="fas fa-shield-halved me-2"></i>Safety Notice</h5>
+                    <div class="glass-card p-3" style="border-left: 3px solid #ef4444;">
+                        <p class="mb-0 text-muted" style="font-size: 0.9rem;">
+                            This chatbot is intended for <strong>educational purposes only</strong>.
+                            It explains chemistry concepts, properties, safety precautions, and laboratory practices.
+                            It does <strong>not</strong> provide instructions that facilitate hazardous experiments
+                            or unsafe chemical procedures.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="{{ url_for('chat') }}" class="btn btn-primary-gradient">
+                        <i class="fas fa-comments me-2"></i>Start Chatting
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

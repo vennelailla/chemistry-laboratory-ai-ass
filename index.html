@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Home — ChemLab Assistant{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block main_class %}page-with-nav{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="hero-badge">
+                    <i class="fas fa-microscope"></i> AI-Powered Chemistry Education
+                </span>
+                <h1 class="hero-title">
+                    Chemistry Laboratory<br>
+                    <span class="gradient-text">Safety & Compound Assistant</span>
+                </h1>
+                <p class="hero-description">
+                    Your intelligent guide to laboratory safety, chemical compounds, elements,
+                    reactions, and analytical chemistry — designed for students, teachers,
+                    and laboratory technicians.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <a href="{{ url_for('chat') }}" class="btn btn-primary-gradient">
+                        <i class="fas fa-comments me-2"></i>Start Chatting
+                    </a>
+                    <a href="{{ url_for('categories') }}" class="btn btn-outline-lab">
+                        <i class="fas fa-book-open me-2"></i>Browse Topics
+                    </a>
+                </div>
+
+                <div class="glass-card fact-card d-flex align-items-start gap-3">
+                    <i class="fas fa-lightbulb fa-lg mt-1"></i>
+                    <div>
+                        <strong style="font-size: 0.8rem; color: var(--purple-600);">Did you know?</strong>
+                        <p class="mb-0 mt-1" style="font-size: 0.9rem; color: var(--gray-600);">
+                            {{ aquatic_species_fact }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="hero-visual">
+                    <div class="molecule-orbit">
+                        <div class="orbit-ring"></div>
+                        <div class="orbit-center"><i class="fas fa-flask"></i></div>
+                        <div class="orbit-atom">H</div>
+                        <div class="orbit-atom">O</div>
+                        <div class="orbit-atom">C</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Banner -->
+    <div class="glass-card p-3 px-4 mb-4 d-flex align-items-center gap-3 flex-wrap">
+        <i class="fas fa-hand-sparkles fa-lg text-purple"></i>
+        <span>Welcome back, <strong>{{ username }}</strong>! Ready to explore chemistry today?</span>
+    </div>
+
+    <!-- Topic Sections -->
+    <section class="mb-5">
+        <h2 class="section-title">Explore Chemistry Topics</h2>
+        <p class="section-subtitle">Click any topic to start a conversation with the AI assistant</p>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('chat') }}?q=What+are+chemical+elements+and+their+properties" class="glass-card topic-card">
+                    <div class="topic-icon elements"><i class="fas fa-atom"></i></div>
+                    <h3>Elements</h3>
+                    <p>Learn about chemical elements, their atomic structure, properties, and roles in the periodic table.</p>
+                    <span class="topic-link">Ask about elements <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('chat') }}?q=Explain+chemical+compounds+and+molecular+formulas" class="glass-card topic-card">
+                    <div class="topic-icon compounds"><i class="fas fa-cubes"></i></div>
+                    <h3>Compounds</h3>
+                    <p>Discover acids, bases, salts, and molecular compounds with their formulas and chemical properties.</p>
+                    <span class="topic-link">Ask about compounds <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('chat') }}?q=What+are+essential+laboratory+safety+precautions" class="glass-card topic-card">
+                    <div class="topic-icon safety"><i class="fas fa-shield-halved"></i></div>
+                    <h3>Laboratory Safety</h3>
+                    <p>Understand PPE, hazard symbols, safe handling procedures, and emergency protocols in the lab.</p>
+                    <span class="topic-link">Ask about safety <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('chat') }}?q=Explain+different+types+of+chemical+reactions" class="glass-card topic-card">
+                    <div class="topic-icon reactions"><i class="fas fa-fire-flame-curved"></i></div>
+                    <h3>Chemical Reactions</h3>
+                    <p>Explore synthesis, decomposition, displacement, and redox reactions with balanced equations.</p>
+                    <span class="topic-link">Ask about reactions <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('chat') }}?q=What+laboratory+equipment+is+used+in+chemistry" class="glass-card topic-card">
+                    <div class="topic-icon equipment"><i class="fas fa-vial"></i></div>
+                    <h3>Laboratory Equipment</h3>
+                    <p>Learn about beakers, burettes, pipettes, spectrophotometers, and other essential lab instruments.</p>
+                    <span class="topic-link">Ask about equipment <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('chat') }}?q=Explain+the+periodic+table+and+element+groups" class="glass-card topic-card">
+                    <div class="topic-icon periodic"><i class="fas fa-table-cells"></i></div>
+                    <h3>Periodic Table</h3>
+                    <p>Navigate element groups, periods, trends in electronegativity, atomic radius, and reactivity.</p>
+                    <span class="topic-link">Ask about periodic table <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Periodic Table Preview -->
+    <section class="mb-5">
+        <div class="glass-card periodic-preview">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                <div>
+                    <h2 class="section-title mb-1">Periodic Table Preview</h2>
+                    <p class="section-subtitle mb-0">A glimpse of the elements that make up our world</p>
+                </div>
+                <a href="{{ url_for('chat') }}?q=Describe+the+periodic+table+groups+and+periods" class="btn btn-outline-lab btn-sm">
+                    <i class="fas fa-comments me-1"></i> Learn More
+                </a>
+            </div>
+            <div class="periodic-grid">
+                <div class="pt-cell alkali"><span class="sym">H</span>1</div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell noble"><span class="sym">He</span>2</div>
+
+                <div class="pt-cell alkali"><span class="sym">Li</span>3</div>
+                <div class="pt-cell alkaline"><span class="sym">Be</span>4</div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell transition"><span class="sym">B</span>5</div>
+                <div class="pt-cell metalloid"><span class="sym">C</span>6</div>
+                <div class="pt-cell nonmetal"><span class="sym">N</span>7</div>
+                <div class="pt-cell nonmetal"><span class="sym">O</span>8</div>
+                <div class="pt-cell halogen"><span class="sym">F</span>9</div>
+                <div class="pt-cell noble"><span class="sym">Ne</span>10</div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+
+                <div class="pt-cell alkali"><span class="sym">Na</span>11</div>
+                <div class="pt-cell alkaline"><span class="sym">Mg</span>12</div>
+                <div class="pt-cell empty"></div><div class="pt-cell empty"></div>
+                <div class="pt-cell transition"><span class="sym">Al</span>13</div>
+                <div class="pt-cell metalloid"><span class="sym">Si</span>14</div>
+                <div class="pt-cell nonmetal"><span class="sym">P</span>15</div>
+                <div class="pt-cell nonmetal"><span class="sym">S</span>16</div>
+                <div class="pt-cell halogen"><span class="sym">Cl</span>17</div>
+                <div class="pt-cell noble"><span class="sym">Ar</span>18</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="glass-card cta-section">
+            <h2 class="section-title">Ready to Learn?</h2>
+            <p class="section-subtitle">Ask any chemistry question and get educational, science-backed answers.</p>
+            <a href="{{ url_for('chat') }}" class="btn btn-primary-gradient btn-lg">
+                <i class="fas fa-robot me-2"></i>Open AI Chat Assistant
+            </a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

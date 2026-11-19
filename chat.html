@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Chat — ChemLab Assistant{% endblock %}
+{% block body_class %}lab-bg{% endblock %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block main_class %}chat-page{% endblock %}
+
+{% block content %}
+<!-- Sidebar Overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Sidebar -->
+<aside class="chat-sidebar" id="chatSidebar">
+    <div class="sidebar-header">
+        <a href="{{ url_for('home') }}" class="sidebar-brand text-decoration-none">
+            <i class="fas fa-flask"></i>
+            ChemLab Assistant
+        </a>
+    </div>
+
+    <div class="sidebar-nav">
+        <a href="{{ url_for('chat') }}" class="sidebar-link active">
+            <i class="fas fa-plus"></i> New Chat
+        </a>
+        <a href="{{ url_for('home') }}" class="sidebar-link">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <a href="{{ url_for('categories') }}" class="sidebar-link">
+            <i class="fas fa-layer-group"></i> Categories
+        </a>
+        <a href="{{ url_for('search') }}" class="sidebar-link">
+            <i class="fas fa-search"></i> Search KB
+        </a>
+        <a href="{{ url_for('about') }}" class="sidebar-link">
+            <i class="fas fa-circle-info"></i> About
+        </a>
+
+        <div class="sidebar-section-title">Quick Prompts</div>
+        <button class="quick-prompt" data-prompt="What is the pH scale and how does it work?">
+            <i class="fas fa-flask me-1"></i> pH Scale basics
+        </button>
+        <button class="quick-prompt" data-prompt="What safety equipment is required in a chemistry lab?">
+            <i class="fas fa-shield-halved me-1"></i> Lab safety gear
+        </button>
+        <button class="quick-prompt" data-prompt="Explain the difference between acids and bases">
+            <i class="fas fa-vial me-1"></i> Acids vs Bases
+        </button>
+        <button class="quick-prompt" data-prompt="What is a chemical reaction and what are its types?">
+            <i class="fas fa-fire-flame-curved me-1"></i> Reaction types
+        </button>
+        <button class="quick-prompt" data-prompt="Describe the periodic table element groups">
+            <i class="fas fa-table-cells me-1"></i> Periodic groups
+        </button>
+
+        <div class="sidebar-section-title mt-3">Actions</div>
+        <a href="{{ url_for('clear_chat') }}" class="sidebar-link danger" id="clearChatBtn">
+            <i class="fas fa-trash-can"></i> Clear Chat
+        </a>
+        <a href="{{ url_for('logout') }}" class="sidebar-link danger">
+            <i class="fas fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div>
+                <div style="font-weight: 600; font-size: 0.85rem;">{{ session.get('username') }}</div>
+                <div style="font-size: 0.7rem; color: var(--gray-400);">Student / Educator</div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- Main Chat Area -->
+<div class="chat-main">
+    <header class="chat-header">
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn-icon d-lg-none" id="sidebarToggle" aria-label="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div>
+                <div class="chat-header-title">
+                    <i class="fas fa-robot me-1 text-purple"></i> Chemistry AI Assistant
+                </div>
+                <small class="text-muted" style="font-size: 0.75rem;">Educational · RAG-powered · Safe responses</small>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('clear_chat') }}" class="btn-icon" title="Clear chat">
+                <i class="fas fa-broom"></i>
+            </a>
+            <a href="{{ url_for('home') }}" class="btn-icon" title="Go home">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="chat-messages" id="chatMessages">
+        {% if history %}
+            {% for item in history %}
+            <div class="message user">
+                <div class="message-avatar"><i class="fas fa-user"></i></div>
+                <div>
+                    <div class="message-bubble">{{ item.user }}</div>
+                </div>
+            </div>
+            <div class="message bot">
+                <div class="message-avatar"><i class="fas fa-flask"></i></div>
+                <div>
+                    <div class="message-bubble">{{ item.bot }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="chat-welcome" id="chatWelcome">
+            <div class="chat-welcome-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+            <h2>How can I help you today?</h2>
+            <p>Ask me about elements, compounds, laboratory safety, chemical reactions, equipment, or the periodic table.</p>
+            <div class="suggestion-chips">
+                <button class="suggestion-chip" data-prompt="What are the essential laboratory safety rules?">
+                    Laboratory safety rules
+                </button>
+                <button class="suggestion-chip" data-prompt="Explain the structure of water (H2O)">
+                    Water molecule structure
+                </button>
+                <button class="suggestion-chip" data-prompt="What is titration and how is it performed?">
+                    Titration basics
+                </button>
+                <button class="suggestion-chip" data-prompt="What are hazard symbols in chemistry?">
+                    Hazard symbols
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="chat-input-area">
+        <form id="chatForm" class="chat-input-wrapper">
+            <textarea class="chat-input" id="messageInput" rows="1"
+                      placeholder="Ask a chemistry question..." autocomplete="off"></textarea>
+            <button type="submit" class="btn-send" id="sendBtn" aria-label="Send message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+        <p class="chat-disclaimer">
+            <i class="fas fa-info-circle me-1"></i>
+            This assistant provides educational information only. It does not facilitate hazardous experiments.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
